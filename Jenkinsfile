@@ -29,8 +29,6 @@ pipeline {
         stage('Docker Tag & Push') {
             steps {
                 script {
-                    shortCommitHash = getShortCommitHash()
-                    IMAGE_VERSION = ${params.SPECIFIER} + "-" + shortCommitHash
                     sh "docker build -f kubernetes/Dockerfile/demoWeb/Dockerfile -t rosered/auto-jenkins ."
                     sh "docker push rosered/auto-jenkins"
 
@@ -39,7 +37,4 @@ pipeline {
             }
         }
     }
-}
-def getShortCommitHash() {
-        return sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
 }
