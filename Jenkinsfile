@@ -1,11 +1,16 @@
 pipeline {
     agent any
 
-    environment {
-        dockerImage = ''
+    parameters {
+        string(defaultValue: "master", description: 'Branch Specifier', name: 'SPECIFIER')
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                git branch: "${params.SPECIFIER}", url: "${GIT_URL}"
+            }
+        }
         stage('Build') {
             steps {
                 sh 'dotnet build'
@@ -16,28 +21,25 @@ pipeline {
                 sh 'dotnet test test'
             }
         }
-        stage('Build image') {
+        stage('Publish') {
+            steps {
+                sh 'dotnet publish -c Release -o kubernetes/Dockerfile/demoWeb/ -r linix-x64'
+            }
+        }
+        stage('Docker Tag & Push') {
             steps {
                 script {
-                    dockerImage = docker.build("rosered/auto-jenkins")
+                    shortCommitHash = getShortCommitHash()
+                    IMAGE_VERSION = ${params.SPECIFIER} + "-" + shortCommitHash
+                    sh "docker build -f kubernetes/Dockerfile/demoWeb/Dockerfile -t rosered/auto-jenkins ."
+                    sh "docker push rosered/auto-jenkins"
+
+                    sh "docker rmi rosered/auto-jenkins"
                 }
             }
         }
-        stage('Push image') {
-            steps {
-                script {
-                    withDockerRegistry(
-                        credentialsId: '7e5f7acc-0d6f-483e-bb5d-298e681e0f4b',
-                        url: 'https://index.docker.io/rosered/auto-jenkins') {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
-        stage('Deployment') {
-            steps {
-                sh 'kubectl apply -f kubernetes/deployment.yml';
-            }
-        }
+    }
+    def getShortCommitHash() {
+        return sh(returnStdout: true, script: "git log -n 1 --pretty=format:'%h'").trim()
     }
 }
