@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demoweb
+  labels:
+    name: demoPod
+    owner: Krihsana_N
+    version: "beta"
+    module: WebDemo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: demoPod
+      owner: Krihsana_N
+      version: "beta"
+      module: WebDemo
+  template:
+    metadata:
+      labels:
+        name: demoPod
+        owner: Krihsana_N
+        version: "beta"
+        module: WebDemo
+    spec:
+      containers:
+        - name: webdemo
+          image: rosered/auto-jenkins
+          ports:
+          - containerPort: 5000
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+                - cat
+                - /app/DemoApp
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - cat
+                - /app/DemoApp.dll
+            initialDelaySeconds: 15
+            periodSeconds: 15
+        - name: nginx
+          image: rosered/nginx
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+                - cat
+                - /etc/nginx/nginx.conf
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command:
+                - cat
+                - /etc/nginx/nginx.conf
+            initialDelaySeconds: 15
+            periodSeconds: 15
+            # - name: sqlserver
+            #image: microsoft/mssql-server-linux:latest
+            # ports:
+            # - containerPort: 1433
+            #protocol: TCP
+            #env:
+            #- name: "ACCEPT_EULA"
+            #value: "Y"
+            #- name: "MSSQL_SA_PASSWORD"
+            #value: "pass@word1"
+            #volumeMounts:
+            #- mountPath: "/var/opt/mssql"
+            #name: "volsqlserver"
+            # volumes:
+            # - name: "volsqlserver"
+            # hostPath:
+            # path: "/var/opt/mssql_demo"
