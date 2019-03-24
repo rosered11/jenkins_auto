@@ -29,10 +29,10 @@ pipeline {
         stage('Docker Tag & Push') {
             steps {
                 script {
-                    sh "sudo docker build -f kubernetes/Dockerfile/demoWeb/Dockerfile -t rosered/auto-jenkins ."
-                    sh "sudo docker push rosered/auto-jenkins"
+                    sh "docker build -f kubernetes/Dockerfile/demoWeb/Dockerfile -t rosered/auto-jenkins ."
+                    sh "docker push rosered/auto-jenkins"
 
-                    sh "sudo docker rmi rosered/auto-jenkins"
+                    sh "docker rmi rosered/auto-jenkins"
                 }
             }
         }
