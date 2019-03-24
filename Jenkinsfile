@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Publish') {
             steps {
-                sh 'dotnet publish -c Release -o kubernetes/Dockerfile/demoWeb/ -r linix-x64'
+                sh 'dotnet publish -c Release -o kubernetes/Dockerfile/demoWeb/ -r linux-x64'
             }
         }
         stage('Docker Tag & Push') {
