@@ -23,13 +23,13 @@ pipeline {
         }
         stage('Publish') {
             steps {
-                sh 'dotnet publish -c Release -o kubernetes/Dockerfile/demoWeb/ '
+                sh 'dotnet publish -c Release -o /var/jenkins_home/workspace/auto_test/kubernetes/Dockerfile/demoWeb/ '
             }
         }
         stage('Docker Tag & Push') {
             steps {
                 script {
-                    //sh "docker build -f kubernetes/Dockerfile/demoWeb/Dockerfile -t rosered/auto-jenkins ."
+                    //sh "docker build -f /var/jenkins_home/workspace/auto_test/kubernetes/Dockerfile/demoWeb/Dockerfile -t rosered/auto-jenkins ."
                     //sh "docker push rosered/auto-jenkins"
                     sh "docker run hello-world"
                     //sh "docker rmi rosered/auto-jenkins"
