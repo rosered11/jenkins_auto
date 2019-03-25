@@ -27,8 +27,9 @@ pipeline {
             }
         }
         stage("Archive build output"){
-            // Archive the build output artifacts.
-            archiveArtifacts artifacts: './kubernetes/Dockerfile/demoWeb/*'   
+            steps{
+                archiveArtifacts artifacts: './kubernetes/Dockerfile/demoWeb/*'   
+            }            
         }
         //stage('Docker Tag & Push') {
         //    steps {
