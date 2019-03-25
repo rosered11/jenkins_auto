@@ -28,7 +28,6 @@ pipeline {
         }
         stage("Archive build output"){
             steps{
-                sh 'sudo rm demoWeb.zip'
                 sh 'sudo zip ./kubernetes/Dockerfile/demoWeb demoWeb'
                 archiveArtifacts artifacts: 'kubernetes/Dockerfile/*.zip'
             }            
