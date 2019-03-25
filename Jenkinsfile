@@ -38,6 +38,6 @@ pipeline {
         //            sh "docker rmi rosered/auto-jenkins"
         //        }
         //    }
-        }
+        //}
     }
 }
