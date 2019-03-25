@@ -29,6 +29,7 @@ pipeline {
         stage('Docker Tag & Push') {
             steps {
                 script {
+                    sh "docker login"
                     sh "docker build -f /var/lib/jenkins/workspace/demoApp_auto/kubernetes/Dockerfile/demoWeb/Dockerfile -t rosered/auto-jenkins ."
                     sh "docker push rosered/auto-jenkins"
                     sh "docker rmi rosered/auto-jenkins"
