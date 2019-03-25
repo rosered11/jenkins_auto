@@ -23,17 +23,21 @@ pipeline {
         }
         stage('Publish') {
             steps {
-                sh 'dotnet publish -c Release -o /var/lib/jenkins/workspace/demoApp_auto/kubernetes/Dockerfile/demoWeb/ '
+                sh 'dotnet publish -c Release -o ./kubernetes/Dockerfile/demoWeb/ '
             }
         }
-        stage('Docker Tag & Push') {
-            steps {
-                script {
-                    sh "docker build -f /var/lib/jenkins/workspace/demoApp_auto/kubernetes/Dockerfile/demoWeb/Dockerfile -t rosered/auto-jenkins ."
-                    sh "docker push rosered/auto-jenkins"
-                    sh "docker rmi rosered/auto-jenkins"
-                }
-            }
+        stage("Archive build output"){
+            // Archive the build output artifacts.
+            archiveArtifacts artifacts: './kubernetes/Dockerfile/demoWeb/*'   
+        }
+        //stage('Docker Tag & Push') {
+        //    steps {
+        //        script {
+        //            sh "docker build -f /var/lib/jenkins/workspace/demoApp_auto/kubernetes/Dockerfile/demoWeb/Dockerfile -t rosered/auto-jenkins ."
+        //            sh "docker push rosered/auto-jenkins"
+        //            sh "docker rmi rosered/auto-jenkins"
+        //        }
+        //    }
         }
     }
 }
