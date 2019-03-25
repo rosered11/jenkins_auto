@@ -28,7 +28,8 @@ pipeline {
         }
         stage("Archive build output"){
             steps{
-                archiveArtifacts artifacts: 'kubernetes/Dockerfile/demoWeb/**/*.zip'   
+                sh 'sudo zip ./kubernetes/Dockerfile/demoWeb demoWeb'
+                archiveArtifacts artifacts: 'kubernetes/Dockerfile/**/*.zip'   
             }            
         }
         //stage('Docker Tag & Push') {
