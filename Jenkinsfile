@@ -21,18 +21,18 @@ pipeline {
                 sh 'dotnet test test'
             }
         }
-        stage('Publish') {
-            steps {
-                sh 'dotnet publish -c Release -o ./kubernetes/Dockerfile/demoWeb/ '
-            }
-        }
-        stage("Archive build output"){
-            steps{
-                sh 'cd kubernetes/Dockerfile'
-                sh 'sudo zip demoWeb demoWeb'
-                archiveArtifacts artifacts: '*.zip'
-            }            
-        }
+        //stage('Publish') {
+        //    steps {
+        //        sh 'dotnet publish -c Release -o ./kubernetes/Dockerfile/demoWeb/ '
+        //    }
+        //}
+        //stage("Archive build output"){
+        //    steps{
+        //        sh 'cd kubernetes/Dockerfile'
+        //        sh 'sudo zip demoWeb demoWeb'
+        //        archiveArtifacts artifacts: '*.zip'
+        //    }            
+        //}
         //stage('Docker Tag & Push') {
         //    steps {
         //        script {
