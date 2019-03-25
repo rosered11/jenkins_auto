@@ -21,12 +21,6 @@ pipeline {
                 sh 'dotnet test test'
             }
         }
-        stage('Compress') {
-            steps {
-                sh 'cd kubernetes/Dockerfile'
-                sh 'sudo zip demoWeb demoWeb'
-            }
-        }
         //stage('Publish') {
         //    steps {
         //        sh 'dotnet publish -c Release -o ./kubernetes/Dockerfile/demoWeb/ '
