@@ -21,25 +21,20 @@ pipeline {
                 sh 'dotnet test test'
             }
         }
-        //stage('Publish') {
-        //    steps {
-        //        sh 'dotnet publish -c Release -o ./kubernetes/Dockerfile/demoWeb/ '
-        //    }
-        //}
-        //stage("Archive build output"){
-        //    steps{
+        stage('Publish') {
+           steps {
+               sh 'dotnet publish -c Release -o ./kubernetes/Dockerfile/demoWeb/ '
+           }
+        }
         
-        //        archiveArtifacts artifacts: '*.zip'
-        //    }            
-        //}
-        //stage('Docker Tag & Push') {
-        //    steps {
-        //        script {
-        //            sh "docker build -f /var/lib/jenkins/workspace/demoApp_auto/kubernetes/Dockerfile/demoWeb/Dockerfile -t rosered/auto-jenkins ."
-        //            sh "docker push rosered/auto-jenkins"
-        //            sh "docker rmi rosered/auto-jenkins"
-        //        }
-        //    }
-        //}
+        stage('Docker Tag & Push') {
+           steps {
+               script {
+                   sh "docker build -f /var/lib/jenkins/workspace/demoApp_auto/kubernetes/Dockerfile/demoWeb/Dockerfile -t rosered/auto-jenkins ."
+                   sh "docker push rosered/auto-jenkins"
+                   sh "docker rmi rosered/auto-jenkins"
+               }
+           }
+        }
     }
 }
