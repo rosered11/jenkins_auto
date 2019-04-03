@@ -26,6 +26,7 @@ steps:
   inputs:
     testRunner: VSTest
     testResultsFiles: '**/*.trx'
+    failTaskOnFailedTests: true
 # ...
 # do this after your tests have run
 
