@@ -19,5 +19,12 @@ steps:
   displayName: 'Build $(buildConfiguration)'
 - script: dotnet test test
   displayName: 'Test'
+# ...
+# do this after your tests have run
+- script: dotnet test test --logger trx --collect "Code coverage"
+- task: PublishTestResults@2
+  inputs:
+    testRunner: xUnit
+    testResultsFiles: '**/*.trx'
 - script: dotnet publish -c $(buildConfiguration) -o publish -r linux-x64
   displayName: 'Publish'
