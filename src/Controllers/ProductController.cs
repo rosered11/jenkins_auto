@@ -33,7 +33,7 @@ namespace DemoApp.Controllers
         [HttpGet]
         public IEnumerable<Product> Get()
         {
-            return productList.GetListProduct();
+            return new List<Product>{ new Product { Name = "Test" } };//productList.GetListProduct();
         }
 
         [HttpGet("GetColorBlue")]
