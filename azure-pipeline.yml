@@ -17,11 +17,12 @@ steps:
   displayName: 'Restore'
 - script: dotnet build src --configuration $(buildConfiguration)
   displayName: 'Build $(buildConfiguration)'
-- script: dotnet test test
-  displayName: 'Test'
+#- script: dotnet test test
+#  displayName: 'Test'
 # ...
 # do this after your tests have run
 - script: dotnet test test --logger trx --collect "Code coverage"
+  displayName: 'Test'
 - task: PublishTestResults@2
   inputs:
     testRunner: xUnit
