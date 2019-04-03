@@ -21,15 +21,13 @@ steps:
 #  displayName: 'Test'
 # ...
 # do this after your tests have run
-#- script: dotnet test test --logger trx --collect "Code coverage"
-
+- script: dotnet test <test-project> --logger trx --collect "Code coverage"
+- task: PublishTestResults@2
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '**/*.trx'
 # ...
 # do this after your tests have run
 
-- task: PublishTestResults@2
-  condition: succeededOrFailed()
-  inputs:
-    testRunner: xUnit
-    testResultsFiles: '**/*.trx'
-- script: dotnet publish -c $(buildConfiguration) -o publish -r linux-x64
-  displayName: 'Publish'
+#- script: dotnet publish -c $(buildConfiguration) -o publish -r linux-x64
+#  displayName: 'Publish'
