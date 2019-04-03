@@ -29,6 +29,7 @@ steps:
     testResultsFiles: '**/*.trx'  
 # ...
 # do this after your tests have run
+- task: PublishBuildArtifacts@1
 
 #- script: dotnet publish -c $(buildConfiguration) -o publish -r linux-x64
 #  displayName: 'Publish'
