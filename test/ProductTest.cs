@@ -34,6 +34,8 @@ namespace DemoAppTest
                 new ProductManage("P3",Color.Blue,Size.Small,3000),
                 new ProductManage("P4",Color.Black,Size.Midium,3000)
             };
+
+            Assert.False(false);
         }
     }
 }
