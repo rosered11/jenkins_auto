@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git credentialsId: 'dockerhub', url: 'https://github.com/rosered11/jenkins_auto.git'
+                git credentialsId: 'github', url: 'https://github.com/rosered11/jenkins_auto.git'
             }
         }
         stage('Build') {
