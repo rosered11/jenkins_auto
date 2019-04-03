@@ -23,10 +23,10 @@ steps:
 # do this after your tests have run
 - script: dotnet test test --logger trx --collect "Code coverage"
 - task: PublishTestResults@2
+  condition: succeededOrFailed()
   inputs:
-    testRunner: VSTest
-    testResultsFiles: '**/*.trx'
-    failTaskOnFailedTests: true
+    testRunner: xUnit
+    testResultsFiles: '**/*.trx'  
 # ...
 # do this after your tests have run
 
