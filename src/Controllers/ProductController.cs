@@ -17,7 +17,11 @@ namespace DemoApp.Controllers
         private readonly IUnitOfWork context = new UnitOfWork();
         private List<ProductManage> productList;
         private List<ProductMachineManage> machineList;
-        public ProductController(){
+        private readonly IUnitOfWork _mycontext;
+        private readonly DatabaseContext _my2context;
+        public ProductController(IUnitOfWork mycontext,DatabaseContext my2context){
+            _mycontext = mycontext;
+            _my2context = my2context;
             productList = context.ProductsRepository.getData()
             .Select( x =>
                 new ProductManage(x.Name,Enum.Parse<Color>(x.Color),Enum.Parse<Size>(x.Size),Int32.Parse(x.Price))
@@ -92,6 +96,11 @@ namespace DemoApp.Controllers
                 );
                 return unitOfWork.SaveContext();
             }
+        }
+        [HttpGet("TestSigelton")]
+        public List<Product> UnitTestDB(){
+            return _my2context.products.Select(x=> new Product { Name = x.Name, Price = Double.Parse(x.Price) }).ToList();
+            //return _mycontext.ProductsRepository.getData().Select(x=> new Product { Name = x.Name, Price = Double.Parse(x.Price) }).ToList();
         }
     }
 }
